@@ -6,13 +6,16 @@ metadata:
 data:
   index.html: |
     <!DOCTYPE html>
-    <html>
-    <head><meta charset="UTF-8"><title>Laboratorio K8s Profesional</title></head>
-    <body>
-        <h1>¡Ingress funcionando a la perfección!</h1>
-        <p>El tráfico fluye excelente. Y como siempre, el menú estrella: tequeños y un buen tostado.</p>
-    </body>
-    </html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Laboratorio K8s Profesional</title>
+        </head>
+        <body>
+            <h1>¡Ingress funcionando a la perfección!</h1>
+            <p>El tráfico fluye excelente. Y como siempre, el menú estrella: tequeños y un buen tostado.</p>
+        </body>
+        </html>
 ---
 # 2. EL DEPLOYMENT (Ahora usa el ConfigMap)
 apiVersion: apps/v1
