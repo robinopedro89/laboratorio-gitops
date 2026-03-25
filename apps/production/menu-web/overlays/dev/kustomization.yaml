@@ -1,3 +1,5 @@
+namespace: dev  # <-- Burbuja de desarrollo
+
 resources:
   - ../../base
   - secreto-encriptado.yaml

@@ -1,3 +1,5 @@
+namespace: prod  # <-- Burbuja de producción
+
 resources:
   - ../../base
   # Acá después podrías agregar un - prod-secreto-encriptado.yaml
