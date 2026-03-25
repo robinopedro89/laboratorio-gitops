@@ -9,7 +9,7 @@ spec:
     - 'https://github.com/robinopedro89/laboratorio-gitops.git' # Solo permite este repo
   destinations:
     - server: 'https://kubernetes.default.svc'
-      namespace: default # Solo permite desplegar en el namespace default
+      namespace: dev # Solo permite desplegar en el namespace default
   clusterResourceWhitelist:
     - group: ''
       kind: Namespace # Permite crear namespaces si fuera necesario
