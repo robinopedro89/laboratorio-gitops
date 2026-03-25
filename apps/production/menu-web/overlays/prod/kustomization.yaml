@@ -1,0 +1,9 @@
+resources:
+  - ../../base
+  # Acá después podrías agregar un - prod-secreto-encriptado.yaml
+
+namePrefix: prod-
+
+replicas:
+  - name: mi-app-deployment
+    count: 5  # ¡En producción necesitamos más poder para los pedidos!
