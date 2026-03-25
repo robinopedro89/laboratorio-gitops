@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mi-app-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mi-app-web
+  template:
+    metadata:
+      labels:
+        app: mi-app-web
+    spec:
+      containers:
+      - name: mi-app-web-container
+        image: nginx:alpine # Cambié tu imagen local por la oficial de nginx para que GitHub y ArgoCD no tengan problemas al descargarla.
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mi-app-service
+spec:
+  type: NodePort
+  selector:
+    app: mi-app-web
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30080
