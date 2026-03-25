@@ -1,3 +1,4 @@
 resources:
   - project-production.yaml
   - menu-workload.yaml
+  - infra-sealed-secrets.yaml
