@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: mi-app-web-container
-        image: nginx:alpine # Cambié tu imagen local por la oficial de nginx para que GitHub y ArgoCD no tengan problemas al descargarla.
+        image: nginx:alpine
         ports:
         - containerPort: 80
 ---
@@ -22,11 +22,33 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mi-app-service
+# ATENCION ACA: Cambiamos NodePort por ClusterIP. 
+# Ahora el servicio es 100% interno y privado. Nadie puede entrar desde afuera.
 spec:
-  type: NodePort
+  type: ClusterIP 
   selector:
     app: mi-app-web
   ports:
     - port: 80
       targetPort: 80
-      nodePort: 30080
+---
+# LO NUEVO: El Ingress. Le decimos al recepcionista (Traefik) qué hacer.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mi-app-ingress
+  annotations:
+    ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  rules:
+  # Si alguien entra escribiendo este dominio exacto...
+  - host: laboratorio.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: mi-app-service # ...mandalo a nuestro servicio privado al puerto 80.
+            port:
+              number: 80
