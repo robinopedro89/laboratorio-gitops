@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: 'https://github.com/robinopedro89/laboratorio-gitops.git'
-    path: apps/menu-web/overlays/dev # ¡Apunta a la nueva ruta de tu app!
+    path: apps/production/menu-web/overlays/dev # ¡Apunta a la nueva ruta de tu app!
     targetRevision: HEAD
   destination:
     server: 'https://kubernetes.default.svc'

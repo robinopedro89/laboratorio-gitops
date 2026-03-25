@@ -1,2 +1,3 @@
 resources:
+  - project-production.yaml
   - menu-workload.yaml

@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: production-workloads
+  namespace: argocd
+spec:
+  description: Proyecto para aplicaciones de producción propia
+  sourceRepos:
+    - 'https://github.com/robinopedro89/laboratorio-gitops.git' # Solo permite este repo
+  destinations:
+    - server: 'https://kubernetes.default.svc'
+      namespace: default # Solo permite desplegar en el namespace default
+  clusterResourceWhitelist:
+    - group: ''
+      kind: Namespace # Permite crear namespaces si fuera necesario
