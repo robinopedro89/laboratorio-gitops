@@ -1,3 +1,20 @@
+# 1. CREAMOS EL CONFIGMAP CON TU CÓDIGO HTML
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mi-app-html
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+    <head><title>Laboratorio K8s Profesional</title></head>
+    <body>
+        <h1>¡Ingress funcionando a la perfección!</h1>
+        <p>El tráfico fluye excelente. Y como siempre, el menú estrella: tequeños y un buen tostado.</p>
+    </body>
+    </html>
+---
+# 2. EL DEPLOYMENT (Ahora usa el ConfigMap)
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -17,22 +34,31 @@ spec:
         image: nginx:alpine
         ports:
         - containerPort: 80
+        # Le decimos dónde enchufar el archivo adentro de Nginx
+        volumeMounts:
+        - name: html-volume
+          mountPath: /usr/share/nginx/html/index.html
+          subPath: index.html
+      # Definimos de dónde viene ese volumen
+      volumes:
+      - name: html-volume
+        configMap:
+          name: mi-app-html
 ---
+# 3. EL SERVICIO INTERNO
 apiVersion: v1
 kind: Service
 metadata:
   name: mi-app-service
-# ATENCION ACA: Cambiamos NodePort por ClusterIP. 
-# Ahora el servicio es 100% interno y privado. Nadie puede entrar desde afuera.
 spec:
-  type: ClusterIP 
+  type: ClusterIP
   selector:
     app: mi-app-web
   ports:
     - port: 80
       targetPort: 80
 ---
-# LO NUEVO: El Ingress. Le decimos al recepcionista (Traefik) qué hacer.
+# 4. EL RECPCIONISTA (Ingress)
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -41,7 +67,6 @@ metadata:
     ingress.kubernetes.io/ssl-redirect: "false"
 spec:
   rules:
-  # Si alguien entra escribiendo este dominio exacto...
   - host: laboratorio.local
     http:
       paths:
@@ -49,6 +74,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: mi-app-service # ...mandalo a nuestro servicio privado al puerto 80.
+            name: mi-app-service
             port:
               number: 80
