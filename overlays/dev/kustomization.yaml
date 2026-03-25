@@ -1,0 +1,9 @@
+resources:
+  - ../../base
+
+namePrefix: dev-
+
+# Kustomize nos permite modificar las réplicas sin tocar el archivo original
+replicas:
+  - name: mi-app-deployment
+    count: 2
