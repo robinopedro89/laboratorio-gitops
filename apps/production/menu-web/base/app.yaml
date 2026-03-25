@@ -37,6 +37,12 @@ spec:
         image: nginx:alpine
         ports:
         - containerPort: 80
+        env:
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mi-secreto-db # El nombre del secreto original (Kustomize le pondrá el dev- solo)
+              key: password       # La llave donde guardamos la contraseña        
         # Le decimos dónde enchufar el archivo adentro de Nginx
         volumeMounts:
         - name: html-volume
